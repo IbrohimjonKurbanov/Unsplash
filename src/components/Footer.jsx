@@ -3,8 +3,8 @@ import React from "react";
 function Footer() {
   return (
     <div className="bg-base-200">
-      <footer className="footer sm:footer-horizontal align-elements flex justify-center md:justify-between flex-col  md:flex-row items-center p-4 ">
-        <aside className="grid-flow-col items-center ">
+      <footer className="footer sm:footer-horizontal align-elements flex flex-col items-center justify-center p-4 md:flex-row md:justify-between">
+        <aside className="grid-flow-col items-center">
           <svg
             width="36"
             height="36"
@@ -18,7 +18,7 @@ function Footer() {
           </svg>
           <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
         </aside>
-        <nav className="grid-flow-col  gap-4 md:place-self-center md:justify-self-end">
+        <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
           <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"

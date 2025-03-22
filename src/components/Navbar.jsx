@@ -23,16 +23,16 @@ function Navbar() {
   }, [theme]);
 
   return (
-    <header className="bg-base-200 ">
+    <header className="bg-base-200">
       <div className="align-elements">
         <div className="navbar">
-          <div className="navbar-start ">
+          <div className="navbar-start">
             <Link to="/" className="hidden md:flex">
-              <FcStackOfPhotos className="w-10 h-10" />
+              <FcStackOfPhotos className="h-10 w-10" />
             </Link>
             <div className="dropdown md:hidden">
               <div tabIndex={0} role="button">
-                <FcStackOfPhotos className="w-10 h-10" />
+                <FcStackOfPhotos className="h-10 w-10" />
               </div>
               <ul
                 tabIndex={0}
@@ -51,9 +51,9 @@ function Navbar() {
             <Link to="/downloadImages" className="flex">
               <div className="indicator">
                 <span className="indicator-item badge badge-xs badge-secondary">
-                  0
+                  {downloadImages.length}
                 </span>
-                <FaDownload className="w-6 h-6" />
+                <FaDownload className="h-6 w-6" />
               </div>
             </Link>
             <Link to="/likedImages" className="flex">
@@ -61,7 +61,7 @@ function Navbar() {
                 <span className="indicator-item badge badge-xs badge-secondary">
                   {likedImages.length}
                 </span>
-                <FaHeart className="w-6 h-6" />
+                <FaHeart className="h-6 w-6" />
               </div>
             </Link>
 

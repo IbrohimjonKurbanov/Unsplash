@@ -6,14 +6,14 @@ function Search() {
     <div>
       <Form
         method="post"
-        className="flex items-center gap-2 max-w-96 mx-auto w-full "
+        className="mx-auto flex w-full max-w-96 items-center gap-2"
       >
         <FormInput
           type="search"
           placeholder="Search photos and illustrations"
           name="search"
         />
-        <button className="btn btn-primary md:hidden btn-sm ">Search</button>
+        <button className="btn btn-primary btn-sm md:hidden">Search</button>
       </Form>
     </div>
   );

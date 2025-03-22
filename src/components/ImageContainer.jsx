@@ -9,7 +9,7 @@ function ImageContainer({ images, pending }) {
       <Masonry gutter="10px">
         {images.map((image) => {
           return (
-            <div key={image.id} className="w-full h-auto ">
+            <div key={image.id} className="h-auto w-full">
               <Image
                 key={image.id}
                 image={image}

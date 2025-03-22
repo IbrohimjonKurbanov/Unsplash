@@ -19,13 +19,13 @@ function Home() {
   const { data, isPending, error } = useFetch(
     `https://api.unsplash.com/search/photos?client_id=${
       import.meta.env.VITE_ACCESS_KEY
-    }&query=${query.toLowerCase()}&page=${pageParam}`
+    }&query=${query.toLowerCase()}&page=${pageParam}`,
   );
 
   useEffect(() => {
     if (data && data.results) {
       setAllImages((prev) =>
-        pageParam === 1 ? data.results : [...prev, ...data.results]
+        pageParam === 1 ? data.results : [...prev, ...data.results],
       );
     }
   }, [data]);
@@ -66,8 +66,8 @@ function Home() {
   }
   if (!isPending && allImages.length === 0) {
     return (
-      <div className="h-full flex justify-center flex-col items-center gap-10">
-        <h1 className="text-center text-2xl md:text-4xl ">
+      <div className="flex h-full flex-col items-center justify-center gap-10">
+        <h1 className="text-center text-2xl md:text-4xl">
           Hech narsa topilmadi!
         </h1>
         <Link to="/" className="btn btn-primary btn-sm md:btn-md">
@@ -82,7 +82,7 @@ function Home() {
         <Search />
       </div>
 
-      <div className="flex flex-col items-center mb-10">
+      <div className="mb-10 flex flex-col items-center">
         <button
           onClick={handleRandom}
           className="btn btn-lg btn-success text-white"

@@ -4,8 +4,7 @@ import { useGlobalContext } from "./../hooks/useGlobalContext";
 import { Link } from "react-router-dom";
 
 function Image({ image, pending, added }) {
-  const { likedImages, dispatch } = useGlobalContext();
-  console.log(image);
+  const { likedImages, downloadImages, dispatch } = useGlobalContext();
 
   const { links, urls, alt_description, user } = image;
 
@@ -24,6 +23,16 @@ function Image({ image, pending, added }) {
   const downloadImage = (e) => {
     e.preventDefault();
     window.open(links.download + "&force=true", "_blank");
+    const isDownloaded = downloadImages.some((img) => img.id === image.id);
+
+    if (!isDownloaded) {
+      if (confirm("Bu rasmni yuklab olmoqchimisiz?")) {
+        window.open(links.download + "&force=true", "_blank");
+        dispatch({ type: "DOWNLOAD", payload: image });
+      }
+    } else {
+      alert("Bu rasm allaqachon yuklab olingan!");
+    }
   };
   return (
     <Link to={`/imageInfo/${image.id}`}>
@@ -63,11 +72,7 @@ function Image({ image, pending, added }) {
           <p className="text-white text-xs md:text-sm">{user.name}</p>
         </span>
         <span className="h-7 w-7  border border-white justify-center  right-2 bottom-2 hover-icons">
-          <span
-            onClick={(e) => {
-              downloadImage(e);
-            }}
-          >
+          <span onClick={(e) => downloadImage(e)}>
             <FaDownload className="text-white w-4 h-4" />
           </span>
         </span>

@@ -12,8 +12,8 @@ function LikedImages() {
   }
   if (likedImages.length === 0) {
     return (
-      <div className="h-full flex justify-center flex-col items-center gap-10">
-        <h1 className="text-center text-2xl md:text-4xl  ">
+      <div className="flex h-full flex-col items-center justify-center gap-10">
+        <h1 className="text-center text-2xl md:text-4xl">
           You haven't chosen any images yet!
         </h1>
         <Link to="/" className="btn btn-primary btn-sm md:btn-md">
@@ -25,7 +25,7 @@ function LikedImages() {
 
   return (
     <div className="align-elements my-10">
-      {likedImages.length > 0 && (
+      {likedImages.length > 1 && (
         <button onClick={handleDelete} className="btn btn-primary btn-lg mb-10">
           Delete all pictures
         </button>
