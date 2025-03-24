@@ -1,17 +1,44 @@
-import React, { useState } from "react";
-import { Form } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Form, useActionData } from "react-router-dom";
 import { FormInput } from "../components";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 
 import { useRegister } from "../hooks/useRegister";
+import { toast } from "react-toastify";
+export const action = async ({ request }) => {
+  const form = await request.formData();
+  const displayName = form.get("displayName");
+  const email = form.get("email");
+  const password = form.get("password");
+  const confirmPassword = form.get("confirmPassword");
+
+  if (password == confirmPassword) {
+    return { displayName, email, password, confirmPassword };
+  } else {
+    toast.warn("Password is not equal");
+    return null;
+  }
+};
 
 function Register() {
-  const { registerWithGoogle } = useRegister();
+  const { registerWithGoogle, registerWithEmail } = useRegister();
   const [showPassword, setShowPassword] = useState(false);
+  const inputData = useActionData();
+
+  useEffect(() => {
+    if (inputData) {
+      registerWithEmail(
+        inputData.displayName,
+        inputData.email,
+        inputData.password,
+      );
+    }
+  }, [inputData]);
+
   return (
     <div className="flex h-screen w-full">
-      <div className="bg-cover bg-center bg-no-repeat md:w-[40%] md:bg-[url('https://picsum.photos/900/1200')]"></div>
+      <div className="h-full bg-cover bg-center bg-no-repeat md:w-[40%] md:bg-[url('https://picsum.photos/900/1200')]"></div>
       <div className="flex w-full items-center justify-center bg-[url('https://picsum.photos/900/1200')] bg-cover bg-center bg-no-repeat px-5 md:w-[60%] md:bg-none md:px-0">
         <Form
           method="post"
@@ -31,7 +58,7 @@ function Register() {
             <FormInput
               type={showPassword ? "text" : "password"}
               placeholder="Confirm Password"
-              name="password"
+              name="confirmPassword"
             />
           </div>
           <div className="block items-center justify-center sm:flex sm:justify-between">
@@ -61,8 +88,8 @@ function Register() {
               Register
             </button>
             <button
-              type="button"
               onClick={registerWithGoogle}
+              type="button"
               className="btn btn-secondary btn-sm md:btn-md grow text-white"
             >
               <FcGoogle className="h-6 w-6" />
@@ -76,7 +103,6 @@ function Register() {
               to="/login"
               className="link link-primary font-medium text-blue-600"
             >
-              {"     "}
               Login here
             </Link>
           </p>

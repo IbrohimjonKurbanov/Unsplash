@@ -14,10 +14,7 @@ function ImageInfo() {
   if (!data || !data.urls) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-10">
-        <h1 className="text-center text-2xl md:text-4xl">Rasm topilmadi</h1>
-        <Link to="/" className="btn btn-primary btn-sm md:btn-md">
-          Go Home
-        </Link>
+        <h1 className="text-center text-2xl md:text-4xl">Loading...</h1>
       </div>
     );
   }
@@ -28,11 +25,11 @@ function ImageInfo() {
   }
   return (
     <div className="flex h-full items-center">
-      <div className="align-elements">
-        <div className="flex items-center gap-10">
+      <div className="align-elements mt-10 md:mt-0">
+        <div className="flex-col items-center gap-10 md:flex md:flex-row">
           <div>
             <img
-              className="h-[500px] w-[500px] rounded-md object-cover"
+              className="h-[300px] w-[500px] rounded-md object-cover md:h-[500px]"
               src={data.urls.regular}
               alt=""
             />

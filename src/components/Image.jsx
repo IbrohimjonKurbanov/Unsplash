@@ -2,10 +2,10 @@ import React from "react";
 import { FaRegHeart, FaHeart, FaDownload } from "react-icons/fa";
 import { useGlobalContext } from "./../hooks/useGlobalContext";
 import { Link } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
 
-function Image({ image, pending, added }) {
+function Image({ image, pending, added, isDownloadedPage }) {
   const { likedImages, downloadImages, dispatch } = useGlobalContext();
-
   const { links, urls, alt_description, user } = image;
 
   function addLikedImage(image, e) {
@@ -22,29 +22,37 @@ function Image({ image, pending, added }) {
   }
   const downloadImage = (e) => {
     e.preventDefault();
-    window.open(links.download + "&force=true", "_blank");
+
     const isDownloaded = downloadImages.some((img) => img.id === image.id);
 
     if (!isDownloaded) {
-      if (confirm("Bu rasmni yuklab olmoqchimisiz?")) {
-        window.open(links.download + "&force=true", "_blank");
-        dispatch({ type: "DOWNLOAD", payload: image });
-      }
+      setTimeout(() => {
+        if (window.confirm("Bu rasmni yuklab olmoqchimisiz?")) {
+          window.open(links.download + "&force=true", "_blank");
+          dispatch({ type: "DOWNLOAD", payload: image });
+        }
+      }, 50);
     } else {
       alert("Bu rasm allaqachon yuklab olingan!");
     }
   };
+
+  function handleDeleteImage(id, e) {
+    e.preventDefault();
+    dispatch({ type: "REMOVE_DOWNLOADED_IMAGE", payload: id });
+  }
+
   return (
     <Link to={`/imageInfo/${image.id}`}>
-      <div className="overflow-hidden relative group select-none block cursor-pointer">
+      <div className="group relative block cursor-pointer overflow-hidden select-none">
         {!added && (
           <span
             onClick={(e) => {
               addLikedImage(image, e);
             }}
-            className=" border-white  h-7 w-7 border  justify-center  right-2 top-2 hover-icons  z-50"
+            className="hover-icons top-2 right-2 z-50 h-7 w-7 justify-center border border-white"
           >
-            <FaRegHeart className="text-white " />
+            <FaRegHeart className="text-white" />
           </span>
         )}
         {added && (
@@ -52,32 +60,45 @@ function Image({ image, pending, added }) {
             onClick={(e) => {
               addLikedImage(image, e);
             }}
-            className="border-white bg-white  h-7 w-7 border  justify-center  right-2 top-2 hover-icons z-50"
+            className="hover-icons top-2 right-2 z-50 h-7 w-7 justify-center border border-white bg-white"
           >
-            <FaHeart className="text-red-600 " />
+            <FaHeart className="text-red-600" />
           </span>
         )}
         <img
           src={urls.regular}
           alt={alt_description}
-          className="skeleton w-full  rounded-md  "
+          className="skeleton w-full rounded-md"
         />
-        <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-400 rounded-md"></div>
-        <span className="left-2 bottom-2 flex items-center gap-2  hover-icons">
+        <div className="absolute inset-0 rounded-md bg-black opacity-0 transition-opacity duration-400 group-hover:opacity-30"></div>
+        <span className="hover-icons bottom-2 left-2 flex items-center gap-2">
           <img
-            className="w-5 h-5 md:w-8 md:h-8 rounded-full"
+            className="h-5 w-5 rounded-full md:h-8 md:w-8"
             src={user.profile_image.large}
             alt={user.name + " avatar"}
           />
-          <p className="text-white text-xs md:text-sm">{user.name}</p>
+          <p className="text-xs text-white md:text-sm">{user.name}</p>
         </span>
-        <span className="h-7 w-7  border border-white justify-center  right-2 bottom-2 hover-icons">
-          <span onClick={(e) => downloadImage(e)}>
-            <FaDownload className="text-white w-4 h-4" />
+        <span
+          onClick={(e) => downloadImage(e)}
+          className="hover-icons right-2 bottom-2 h-7 w-7 justify-center border border-white"
+        >
+          <span>
+            <FaDownload className="h-4 w-4 text-white" />
           </span>
         </span>
+        {isDownloadedPage && (
+          <span
+            onClick={(e) => handleDeleteImage(image.id, e)}
+            className="hover-icons top-2 left-2 h-7 w-7 justify-center"
+          >
+            <span>
+              <MdDelete className="h-6 w-6 text-white transition duration-200 hover:text-red-600" />
+            </span>
+          </span>
+        )}
         {pending && (
-          <div className="absolute inset-0 skeleton rounded-md"></div>
+          <div className="skeleton absolute inset-0 rounded-md"></div>
         )}
       </div>
     </Link>

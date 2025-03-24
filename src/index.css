@@ -1,24 +1,23 @@
 @import "tailwindcss";
 @plugin "daisyui";
 @plugin "daisyui" {
-  themes: winter --default, dracula --prefersdark, cupcake;
+  themes:
+    winter --default,
+    dracula --prefersdark,
+    cupcake;
 }
 
 @layer components {
   .align-elements {
-    @apply max-w-[1400px] mx-auto px-5;
+    @apply mx-auto max-w-[1400px] px-3 md:px-5;
   }
   .hover-icons {
-    @apply absolute  rounded-full flex items-center cursor-pointer  invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300;
+    @apply invisible absolute flex cursor-pointer items-center rounded-full opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100;
   }
   html,
   body,
   #root {
-    @apply h-full;
-  }
-
-  #root {
-    @apply flex flex-col;
+    @apply flex h-full flex-col;
   }
 
   main {

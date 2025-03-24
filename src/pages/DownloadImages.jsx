@@ -32,7 +32,9 @@ function DownloadedImages() {
         </button>
       )}
 
-      {downloadImages.length > 0 && <ImageContainer images={downloadImages} />}
+      {downloadImages.length > 0 && (
+        <ImageContainer images={downloadImages} isDownloadedPage={true} />
+      )}
     </div>
   );
 }

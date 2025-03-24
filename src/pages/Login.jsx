@@ -1,11 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Link } from "react-router-dom";
 import { FormInput } from "../components";
 import { FcGoogle } from "react-icons/fc";
+import { useActionData } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
+import { useLogin } from "../hooks/useLogin";
+export const action = async ({ request }) => {
+  const form = await request.formData();
+  const email = form.get("email");
+  const password = form.get("password");
+
+  return { email, password };
+};
 function Login() {
   const { registerWithGoogle } = useRegister();
+  const { loginWithEmail } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
+  const inputData = useActionData();
+
+  useEffect(() => {
+    if (inputData) {
+      loginWithEmail(inputData.email, inputData.password);
+    }
+  }, [inputData]);
   return (
     <div className="flex h-screen w-full">
       <div className="bg-cover bg-center bg-no-repeat md:w-[40%] md:bg-[url('https://picsum.photos/900/1200')]"></div>
@@ -36,7 +53,10 @@ function Login() {
                 className="checkbox checkbox-md checkbox-primary"
               />
 
-              <label htmlFor="check" className="text-md ml-3 block">
+              <label
+                htmlFor="check"
+                className="text-md ml-3 block cursor-pointer"
+              >
                 Show password
               </label>
             </div>
@@ -46,6 +66,7 @@ function Login() {
           </div>
           <div className="my-5 flex flex-col gap-5 md:flex-row">
             <button
+              onClick={loginWithEmail}
               type="submit"
               className="btn btn-primary btn-sm md:btn-md grow text-white"
             >
@@ -67,7 +88,6 @@ function Login() {
               to="/register"
               className="link link-primary font-medium text-blue-600"
             >
-              {"     "}
               Register here
             </Link>
           </p>

@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { useEffect } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
   Home,
   About,
@@ -16,11 +13,15 @@ import {
 } from "./pages";
 import MainLayout from "./layouts/MainLayout";
 import { action as HomeAction } from "./pages/Home";
-import { ProtectedRoutes } from "./components";
+import { action as RegisterAction } from "./pages/Register";
+import { action as LoginAction } from "./pages/Login";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 import { useGlobalContext } from "./hooks/useGlobalContext";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase/firebaseConfig";
 
 function App() {
-  const { user } = useGlobalContext();
+  const { user, dispatch } = useGlobalContext();
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -59,13 +60,26 @@ function App() {
     },
     {
       path: "/login",
-      element: user ? <Navigate to="/" /> : <Login />,
+      element: <Login />,
+      action: LoginAction,
     },
     {
       path: "/register",
-      element: user ? <Navigate to="/" /> : <Register />,
+      element: <Register />,
+      action: RegisterAction,
     },
   ]);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch({ type: "LOGIN", payload: user });
+        localStorage.setItem("user", JSON.stringify(user));
+      } else {
+        dispatch({ type: "LOGOUT" });
+        localStorage.removeItem("user");
+      }
+    });
+  }, []);
 
   return <RouterProvider router={routes} />;
 }
