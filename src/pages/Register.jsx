@@ -76,9 +76,6 @@ function Register() {
                 Show password
               </label>
             </div>
-            <p className="cursor-pointer text-center hover:underline md:text-right">
-              Forgot password?
-            </p>
           </div>
           <div className="my-5 flex flex-col gap-5 md:flex-row">
             <button
@@ -103,6 +100,7 @@ function Register() {
               to="/login"
               className="link link-primary font-medium text-blue-600"
             >
+              {"     "}
               Login here
             </Link>
           </p>

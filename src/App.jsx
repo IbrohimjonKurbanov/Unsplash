@@ -10,6 +10,7 @@ import {
   ImageInfo,
   Login,
   Register,
+  Profile,
 } from "./pages";
 import MainLayout from "./layouts/MainLayout";
 import { action as HomeAction } from "./pages/Home";
@@ -55,6 +56,10 @@ function App() {
         {
           path: "/imageInfo/:id",
           element: <ImageInfo />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
       ],
     },

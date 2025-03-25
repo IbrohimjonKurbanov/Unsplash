@@ -16,6 +16,9 @@ function FormInput({ type, placeholder, name }) {
       )}
       {placeholder == "Full Name" && <FaUser className="h-4 w-4 opacity-70" />}
       {placeholder == "Email" && <MdEmail className="h-4 w-4 opacity-70" />}
+      {placeholder == "Enter email" && (
+        <MdEmail className="h-4 w-4 opacity-70" />
+      )}
       {placeholder == "Password" && <FaKey className="h-4 w-4 opacity-70" />}
       {placeholder == "Confirm Password" && (
         <FaKey className="h-4 w-4 opacity-70" />

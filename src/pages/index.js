@@ -6,3 +6,4 @@ export { default as DownloadImages } from "./DownloadImages";
 export { default as ImageInfo } from "./ImageInfo";
 export { default as Login } from "./Login";
 export { default as Register } from "./Register";
+export { default as Profile } from "./Profile";

@@ -3,26 +3,39 @@ import { FaRegHeart, FaHeart, FaDownload } from "react-icons/fa";
 import { useGlobalContext } from "./../hooks/useGlobalContext";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
-
+import { useFireStore } from "../hooks/useFireStore";
+import { toast } from "react-toastify";
 function Image({ image, pending, added, isDownloadedPage }) {
-  const { likedImages, downloadImages, dispatch } = useGlobalContext();
+  const {
+    likedImages,
+    downloadImages,
+    dispatch,
+    user: authUser,
+  } = useGlobalContext();
+  const { addDocument, deleteDocument } = useFireStore();
   const { links, urls, alt_description, user } = image;
-
-  function addLikedImage(image, e) {
+  const addLikedImage = (image, e) => {
     e.preventDefault();
+
+    if (!authUser.emailVerified) {
+      return toast.info("Please, verify your email, Go to Profile page");
+    }
+
     const alreadyAdded = likedImages.some((img) => {
       return img.id == image.id;
     });
 
     if (!alreadyAdded) {
-      dispatch({ type: "LIKE", payload: image });
+      addDocument("likedImages", image.id, image);
     } else {
-      dispatch({ type: "UNLIKE", payload: image.id });
+      deleteDocument("likedImages", image.id);
     }
-  }
+  };
   const downloadImage = (e) => {
     e.preventDefault();
-
+    if (!authUser.emailVerified) {
+      return toast.info("Please, verify your email, Go to Profile page");
+    }
     const isDownloaded = downloadImages.some((img) => img.id === image.id);
 
     if (!isDownloaded) {
@@ -39,6 +52,7 @@ function Image({ image, pending, added, isDownloadedPage }) {
 
   function handleDeleteImage(id, e) {
     e.preventDefault();
+
     dispatch({ type: "REMOVE_DOWNLOADED_IMAGE", payload: id });
   }
 

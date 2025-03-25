@@ -13,7 +13,6 @@ import { useEffect } from "react";
 export const useRegister = () => {
   const { dispatch, user } = useGlobalContext();
   const navigate = useNavigate();
-  console.log(user);
 
   const saveUser = (user) => {
     localStorage.setItem("current-user", JSON.stringify(user));
@@ -38,7 +37,6 @@ export const useRegister = () => {
           photoURL: `https://api.dicebear.com/9.x/initials/svg?seed=${displayName}`,
         });
         saveUser(user);
-        console.log(user);
 
         toast.success(`Welcome, ${displayName}`);
       })
