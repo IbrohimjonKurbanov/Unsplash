@@ -4,12 +4,7 @@ import ImageContainer from "../components/ImageContainer";
 import { Link } from "react-router-dom";
 
 function DownloadedImages() {
-  const { downloadImages, dispatch } = useGlobalContext();
-
-  function handleDelete() {
-    if (confirm("Are you sure you want to delete all downloaded pictures?"))
-      dispatch({ type: "CLEAR_DOWNLOADED_IMAGES" });
-  }
+  const { downloadImages } = useGlobalContext();
 
   if (downloadImages.length === 0) {
     return (
@@ -26,12 +21,6 @@ function DownloadedImages() {
 
   return (
     <div className="align-elements my-10">
-      {downloadImages.length > 1 && (
-        <button onClick={handleDelete} className="btn btn-primary btn-lg mb-10">
-          Delete all downloaded pictures
-        </button>
-      )}
-
       {downloadImages.length > 0 && (
         <ImageContainer images={downloadImages} isDownloadedPage={true} />
       )}

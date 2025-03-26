@@ -4,12 +4,8 @@ import ImageContainer from "./../components/ImageContainer";
 import { Link } from "react-router-dom";
 
 function LikedImages() {
-  const { likedImages, dispatch } = useGlobalContext();
+  const { likedImages } = useGlobalContext();
 
-  function handleDelete() {
-    if (confirm("Are you sure you want to delete all pictures?"))
-      dispatch({ type: "CLEAR_LIKED_IMAGES" });
-  }
   if (likedImages.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-10">
@@ -25,12 +21,6 @@ function LikedImages() {
 
   return (
     <div className="align-elements my-10">
-      {likedImages.length > 1 && (
-        <button onClick={handleDelete} className="btn btn-primary btn-lg mb-10">
-          Delete all pictures
-        </button>
-      )}
-
       {likedImages.length > 0 && <ImageContainer images={likedImages} />}
     </div>
   );

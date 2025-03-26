@@ -39,9 +39,6 @@ const changeState = (state, action) => {
         likedImages: action.payload,
       };
       break;
-    case "CLEAR_LIKED_IMAGES":
-      newState = { ...state, likedImages: [] };
-      break;
     case "DOWNLOAD":
       newState = {
         ...state,
@@ -56,12 +53,7 @@ const changeState = (state, action) => {
         ),
       };
       break;
-    case "CLEAR_DOWNLOADED_IMAGES":
-      newState = {
-        ...state,
-        downloadImages: [],
-      };
-      break;
+
     case "UPDATE_PROFILE_IMAGE":
       newState = {
         ...state,
