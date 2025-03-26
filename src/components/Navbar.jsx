@@ -7,7 +7,8 @@ import NavLinks from "./NavLinks";
 import { useLogout } from "../hooks/useLogout";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 function Navbar() {
-  const { likedImages, user, downloadImages } = useGlobalContext();
+  const { likedImages, user, downloadImages, profileImage } =
+    useGlobalContext();
   const { logout } = useLogout();
 
   const themeFromLocalStorage = () => {
@@ -94,7 +95,7 @@ function Navbar() {
                   <div className="ring-primary ring-offset-base-100 w-7 rounded-full ring ring-offset-2 md:w-9">
                     {user?.photoURL && (
                       <img
-                        src={user?.photoURL || "User"}
+                        src={profileImage || user?.photoURL || "User"}
                         alt={user?.displayName + " avatar" || "User"}
                       />
                     )}

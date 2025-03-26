@@ -10,8 +10,9 @@ const getUserData = () => {
         user,
         likedImages: [],
         downloadImages: [],
+        profileImage: null,
       }
-    : { user: null, likedImages: [], downloadImages: [] };
+    : { user: null, likedImages: [], downloadImages: [], profileImage: null };
 };
 
 const saveUserData = (state) => {
@@ -56,7 +57,16 @@ const changeState = (state, action) => {
       };
       break;
     case "CLEAR_DOWNLOADED_IMAGES":
-      newState = { ...state, downloadImages: [] };
+      newState = {
+        ...state,
+        downloadImages: [],
+      };
+      break;
+    case "UPDATE_PROFILE_IMAGE":
+      newState = {
+        ...state,
+        profileImage: action.payload,
+      };
       break;
     default:
       return state;

@@ -36,7 +36,7 @@ function Login() {
         <div className="flex w-full items-center justify-center bg-[url('https://picsum.photos/900/1200')] bg-cover bg-center bg-no-repeat px-5 md:w-[60%] md:bg-none md:px-0">
           <Form
             method="post"
-            className="w-full max-w-[450px] rounded-lg bg-white p-7 shadow-xl"
+            className="w-full max-w-[450px] rounded-lg p-7 shadow-xl"
           >
             <h1 className="mb-5 text-center text-3xl font-medium md:text-4xl">
               Login
